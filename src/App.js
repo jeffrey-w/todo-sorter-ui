@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { set } from "./list-slice";
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { SortModal } from "./sort-modal";
+import { TodoList } from "./todolist";
 
 function App() {
+
+  const [open, setOpen] = useState(false);
+
+  const todos = useSelector((state) => state.value);
+  const dispatch = useDispatch();
+
+  const handleAdd = useCallback(todo =>
+    dispatch(set([...todos, todo])), [dispatch, todos]);
+
+  const handleDelete = useCallback(todo =>
+    dispatch(set(todos.filter(t =>
+      t !== todo))), [dispatch, todos]);
+
+  const handleOpenDialog = useCallback(open => setOpen(open), []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AppBar color="primary" position="static">
+        <Toolbar>
+          <Typography variant="h4">TODOsorter</Typography>
+        </Toolbar>
+      </AppBar>
+      <TodoList todos={todos} onAdd={handleAdd} onDelete={handleDelete} onOpenDialog={handleOpenDialog} />
+      <SortModal todos={todos} open={open} setOpen={setOpen} />
     </div>
   );
 }
