@@ -68,7 +68,7 @@ export function SortModal(props) {
 
     return (
         <Dialog maxWidth="32vw" onClose={() => props.setOpen(false)} open={props.open}>
-            <Box height="32vh" width="32vw">
+            <Box height="54vh" width="32vw">
                 <DialogActions>
                     <IconButton disabled={props.open && !undo.length} onClick={handleUndo}>
                         <Undo />
@@ -81,17 +81,20 @@ export function SortModal(props) {
                     <Typography variant="h5">
                         Would you rather...
                     </Typography>
-                    <Card onClick={() => handleSelect(true)} sx={{ margin: "16px 0" }}>
+                    <Card onClick={() => handleSelect(true)} sx={{ margin: "48px 0" }}>
                         <CardActionArea>
                             <CardContent>
-                                <Typography variant="body1">{current?.name}</Typography>
+                                <Typography color="primary" variant="h6">{current?.name}</Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
-                    <Card onClick={() => handleSelect(false)} sx={{ margin: "16px 0" }}>
+                    <Typography variant="h5">
+                        Or
+                    </Typography>
+                    <Card onClick={() => handleSelect(false)} sx={{ margin: "48px 0" }}>
                         <CardActionArea>
                             <CardContent>
-                                <Typography variant="body1">{next?.name}</Typography>
+                                <Typography color="primary" variant="h6">{next?.name}</Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>

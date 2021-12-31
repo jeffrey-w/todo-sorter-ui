@@ -43,17 +43,17 @@ export function TodoList(props) {
             </Grid>
             {
                 showInput || (props.todos?.length) ? 
-                    <Paper>
+                    <Paper sx={{ maxHeight: "384px", overflow: "auto" }}>
                         <List>
-                            {props.todos.map(todo => (
-                                <ListItem key={todo}>
+                            {props.todos.map((todo, index) => (
+                                <ListItem key={index}>
                                     <ListItemIcon>
                                         <Check/>
                                     </ListItemIcon>
                                     <ListItemText>
                                         {todo}
                                     </ListItemText>
-                                    <IconButton onClick={() => props.onDelete(todo)}>
+                                    <IconButton onClick={() => props.onDelete(index)}>
                                         <Clear/>
                                     </IconButton>
                                 </ListItem>

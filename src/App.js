@@ -15,9 +15,9 @@ function App() {
   const handleAdd = useCallback(todo =>
     dispatch(set([...todos, todo])), [dispatch, todos]);
 
-  const handleDelete = useCallback(todo =>
-    dispatch(set(todos.filter(t =>
-      t !== todo))), [dispatch, todos]);
+  const handleDelete = useCallback(index =>
+    dispatch(set(todos.filter((_, i) =>
+      i !== index))), [dispatch, todos]);
 
   const handleOpenDialog = useCallback(open => setOpen(open), []);
 
