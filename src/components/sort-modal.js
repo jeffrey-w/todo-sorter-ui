@@ -1,11 +1,11 @@
-import { set } from "./list-slice"
-import { Sorter } from "./model/sorter"
-import { Todo, TodoList } from "./model/todo";
-import { Redo, Undo } from "@mui/icons-material";
-import { Card, CardActionArea, CardContent, Dialog, DialogActions, DialogContent, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+import { Card, CardActionArea, CardContent, Dialog, DialogActions, DialogContent, IconButton, Typography } from "@mui/material";
+import { Redo, Undo } from "@mui/icons-material";
+import { set } from "../store/list-slice"
+import { Sorter } from "../modules/sorter"
+import { Todo, TodoList } from "../modules/todo";
 import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 var sorter;
 var undo;

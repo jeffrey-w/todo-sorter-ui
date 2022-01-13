@@ -1,9 +1,9 @@
-import { set } from "./list-slice";
 import { AppBar, Toolbar, Typography } from "@mui/material";
+import { SortModal } from "./components/sort-modal";
+import { TodoList } from "./components/todolist";
+import { set } from "./store/list-slice";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SortModal } from "./sort-modal";
-import { TodoList } from "./todolist";
 
 function App() {
 
