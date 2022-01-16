@@ -1,23 +1,27 @@
 import { Add, Check, Clear, Sort } from "@mui/icons-material";
 import { Box, Grid, IconButton, Input, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from "@mui/material";
-import { useState } from "react";
+import React, { KeyboardEvent, useState } from "react";
 
-const enter = 13;
-const escape = 27;
+type Props = {
+    todos: string[],
+    onAdd: (todo: string) => void,
+    onDelete: (index: number) => void,
+    onOpenDialog: (flag: boolean) => void,
+};
 
-export function TodoList(props) {
+export function TodoList(props: Props) {
 
     const [showInput, setShowInput] = useState(false);
-    const [todo, setTodo] = useState();
+    const [todo, setTodo] = useState("");
 
-    const handleAdd = (event) => {
-        if (event.keyCode === enter) {
-            if (event.target.value !== "") {
-                props.onAdd(event.target.value);
+    const handleAdd = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            if (event.currentTarget.value !== "") {
+                props.onAdd(event.currentTarget.value);
             }
             toggleInput();
         }
-        else if (event.keyCode === escape) {
+        else if (event.key === "Escape") {
             toggleInput();
         }
     }

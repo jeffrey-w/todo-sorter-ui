@@ -2,21 +2,23 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import { SortModal } from "./components/sort-modal";
 import { TodoList } from "./components/todolist";
 import { set } from "./store/list-slice";
+import { AppDispatch, RootState } from "./store/store";
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+
 
 function App() {
 
   const [open, setOpen] = useState(false);
 
-  const todos = useSelector((state) => state.value);
-  const dispatch = useDispatch();
+  const todos = (useSelector as TypedUseSelectorHook<RootState>)((state) => state.value);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleAdd = useCallback(todo =>
     dispatch(set([...todos, todo])), [dispatch, todos]);
 
   const handleDelete = useCallback(index =>
-    dispatch(set(todos.filter((_, i) =>
+    dispatch(set(todos.filter((_: string, i: number) =>
       i !== index))), [dispatch, todos]);
 
   const handleOpenDialog = useCallback(open => setOpen(open), []);

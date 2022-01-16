@@ -2,21 +2,28 @@ import { Box } from "@mui/system";
 import { Card, CardActionArea, CardContent, Dialog, DialogActions, DialogContent, IconButton, Typography } from "@mui/material";
 import { Redo, Undo } from "@mui/icons-material";
 import { set } from "../store/list-slice"
-import { Sorter } from "../modules/sorter"
+import { AppDispatch } from "../store/store";
+import { Memento, Sorter } from "../modules/sorter"
 import { Todo, TodoList } from "../modules/todo";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
-var sorter;
-var undo;
-var redo;
+var sorter: Sorter;
+var undo: Memento[];
+var redo: Memento[];
 
-export function SortModal(props) {
+type Props = {
+    open: boolean,
+    todos: string[],
+    setOpen: (flag: boolean) => void,
+};
 
-    const [current, setCurrent] = useState();
-    const [next, setNext] = useState();
+export function SortModal(props: Props) {
 
-    const dispatch = useDispatch();
+    const [current, setCurrent] = useState({} as Todo);
+    const [next, setNext] = useState({} as Todo);
+
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         undo = [];
@@ -29,7 +36,7 @@ export function SortModal(props) {
         }
     }, [props.open, props.todos]);
 
-    const handleSelect = flag => {
+    const handleSelect = (flag: boolean) => {
         undo.push(sorter.save());
         redo = [];
         if (flag) {
@@ -42,7 +49,7 @@ export function SortModal(props) {
             setCurrent(sorter.getCurrent());
             setNext(sorter.getNext());
         } else {
-            sorter = new Sorter(TodoList.merge(sorter.getLists()));
+            sorter = new Sorter(TodoList.merge(sorter.lists));
             if (sorter.isSorted()) {
                 dispatch(set(sorter.getTodos().map(todo => todo.name)));
                 props.setOpen(false);
@@ -52,22 +59,26 @@ export function SortModal(props) {
 
     const handleUndo = () => {
         const memento = undo.pop();
-        redo.push(sorter.save());
-        sorter.restore(memento);
-        setCurrent(sorter.getCurrent());
-        setNext(sorter.getNext());
+        if (memento) {
+            redo.push(sorter.save());
+            sorter.restore(memento);
+            setCurrent(sorter.getCurrent());
+            setNext(sorter.getNext());
+        }
     }
 
     const handleRedo = () => {
         const memento = redo.pop();
-        undo.push(sorter.save());
-        sorter.restore(memento);
-        setCurrent(sorter.getCurrent());
-        setNext(sorter.getNext());
+        if (memento) {
+            undo.push(sorter.save());
+            sorter.restore(memento);
+            setCurrent(sorter.getCurrent());
+            setNext(sorter.getNext());
+        }
     }
 
     return (
-        <Dialog maxWidth="32vw" onClose={() => props.setOpen(false)} open={props.open}>
+        <Dialog maxWidth="xl" onClose={() => props.setOpen(false)} open={props.open}>
             <Box height="54vh" width="32vw">
                 <DialogActions>
                     <IconButton disabled={props.open && !undo.length} onClick={handleUndo}>
