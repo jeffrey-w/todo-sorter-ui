@@ -1,6 +1,6 @@
 import { Add, Check, Clear, Sort } from "@mui/icons-material";
 import { Box, Grid, IconButton, Input, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from "@mui/material";
-import React, { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useState } from "react";
 
 type Props = {
     todos: string[],
@@ -12,7 +12,7 @@ type Props = {
 export function TodoList(props: Props) {
 
     const [showInput, setShowInput] = useState(false);
-    const [todo, setTodo] = useState("");
+    const [todo, setTodo] = useState<string>();
 
     const handleAdd = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {

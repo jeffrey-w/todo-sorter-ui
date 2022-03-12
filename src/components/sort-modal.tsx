@@ -1,12 +1,11 @@
 import { Box } from "@mui/system";
 import { Card, CardActionArea, CardContent, Dialog, DialogActions, DialogContent, IconButton, Typography } from "@mui/material";
-import { Redo, Undo } from "@mui/icons-material";
-import { set } from "../store/list-slice"
-import { AppDispatch } from "../store/store";
 import { Memento, Sorter } from "../modules/sorter"
+import { Redo, Undo } from "@mui/icons-material";
 import { Todo, TodoList } from "../modules/todo";
-import { useDispatch } from "react-redux";
+import { set } from "../store/list-slice"
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../store/store";
 
 var sorter: Sorter;
 var undo: Memento[];
@@ -20,17 +19,17 @@ type Props = {
 
 export function SortModal(props: Props) {
 
-    const [current, setCurrent] = useState({} as Todo);
-    const [next, setNext] = useState({} as Todo);
+    const [current, setCurrent] = useState<Todo>();
+    const [next, setNext] = useState<Todo>();
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         undo = [];
         redo = [];
         if (props.open) {
             sorter = new Sorter(props.todos.map(todo =>
-                new Todo(0, todo)));
+                Todo.create(todo)));
             setCurrent(sorter.getCurrent());
             setNext(sorter.getNext());
         }

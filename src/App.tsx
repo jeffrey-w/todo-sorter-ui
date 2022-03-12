@@ -2,17 +2,15 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import { SortModal } from "./components/sort-modal";
 import { TodoList } from "./components/todolist";
 import { set } from "./store/list-slice";
-import { AppDispatch, RootState } from "./store/store";
+import { useAppDispatch, useAppSelector } from "./store/store";
 import { useCallback, useState } from "react";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-
 
 function App() {
 
   const [open, setOpen] = useState(false);
 
-  const todos = (useSelector as TypedUseSelectorHook<RootState>)((state) => state.value);
-  const dispatch = useDispatch<AppDispatch>();
+  const todos = useAppSelector((state) => state.value);
+  const dispatch = useAppDispatch();
 
   const handleAdd = useCallback(todo =>
     dispatch(set([...todos, todo])), [dispatch, todos]);
