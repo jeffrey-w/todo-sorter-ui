@@ -60,11 +60,11 @@ export class Sorter {
     }
 
     /**
-     * Induces this `Sorter` to increment the rank of the `Todo` currently being prioritized.
+     * Induces this `Sorter` to increment the rank of the `Todo` presently being prioritized.
      * 
      * @throws An `Error` if incrementing the priority of the current `Todo` results in arithmetic overflow.
      */
-    incrementOuter() {
+    incrementCurrent() {
         this._lists = incrementAt(this._lists, this._cursor, this._outer);
     }
 
@@ -74,7 +74,7 @@ export class Sorter {
      * 
      * @throws An `Error` if incrementing the priority of the next `Todo` results in arithmetic overflow.
      */
-    incrementInner() {
+    incrementNext() {
         this._lists = incrementAt(this._lists, this._cursor, this._inner);
     }
 

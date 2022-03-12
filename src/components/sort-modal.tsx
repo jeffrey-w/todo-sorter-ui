@@ -39,9 +39,9 @@ export function SortModal(props: Props) {
         undo.push(sorter.save());
         redo = [];
         if (flag) {
-            sorter.incrementOuter();
+            sorter.incrementCurrent();
         } else {
-            sorter.incrementInner();
+            sorter.incrementNext();
         }
         sorter.advance()
         if (sorter.hasNext()) {
@@ -57,19 +57,17 @@ export function SortModal(props: Props) {
     }
 
     const handleUndo = () => {
-        const memento = undo.pop();
-        if (memento) {
-            redo.push(sorter.save());
-            sorter.restore(memento);
-            setCurrent(sorter.getCurrent());
-            setNext(sorter.getNext());
-        }
+        transfer(undo, redo);
     }
 
     const handleRedo = () => {
-        const memento = redo.pop();
+        transfer(redo, undo);
+    }
+
+    const transfer = (from: Memento[], to: Memento[]) => {
+        const memento = from.pop();
         if (memento) {
-            undo.push(sorter.save());
+            to.push(sorter.save());
             sorter.restore(memento);
             setCurrent(sorter.getCurrent());
             setNext(sorter.getNext());
