@@ -42,7 +42,7 @@ export class Sorter {
     /**
      * Provides the next `Todo` to rank against the one currently being prioritized by this `Sorter`.
      * 
-     * @returns {Todo} The next `Todo` to rank agains the current one.
+     * @returns {Todo} The next `Todo` to rank against the current one.
      */
     getNext(): Todo {
         return this._lists[this._cursor].getAt(this._inner);
@@ -65,7 +65,7 @@ export class Sorter {
      * @throws An `Error` if incrementing the priority of the current `Todo` results in arithmetic overflow.
      */
     incrementCurrent() {
-        this._lists = incrementAt(this._lists, this._cursor, this._outer);
+        this._lists = this.incrementAt(this._lists, this._cursor, this._outer);
     }
 
     /**
@@ -75,7 +75,13 @@ export class Sorter {
      * @throws An `Error` if incrementing the priority of the next `Todo` results in arithmetic overflow.
      */
     incrementNext() {
-        this._lists = incrementAt(this._lists, this._cursor, this._inner);
+        this._lists = this.incrementAt(this._lists, this._cursor, this._inner);
+    }
+
+    private incrementAt(lists: TodoList[], cursor: number, index: number) {
+        const clone = [...lists];
+        clone[cursor] = clone[cursor].incrementAt(index);
+        return clone;
     }
 
     /**
@@ -135,12 +141,6 @@ export class Sorter {
         this._inner = memento.inner;
     }
 
-}
-
-function incrementAt(lists: TodoList[], cursor: number, index: number) {
-    const clone = [...lists];
-    clone[cursor] = clone[cursor].incrementAt(index);
-    return clone;
 }
 
 /**
