@@ -139,26 +139,7 @@ export class TodoList {
             return groups;
         }, {} as Record<K, V[]>);
     }
-
-    /**
-     * Provides a new `Todo` with the same name and a priority that is one greater than this one.
-     * 
-     * @returns {Todo} A new `Todo` with a higher priority than this one.
-     * @throws An `Error` if incrementing the priority of this `Todo` results in arithmetic overflow.
-     */
-
-    /**
-     * Provides a new `TodoList` with a `Todo` at the specified `index` that is one greater than the `Todo` at that
-     * position in this `TodoList`.
-     * 
-     * @param {number} index The position of the `Todo` to increment.
-     * @returns {TodoList} A new `TodoList`.
-     * @throws An `Error` if the specified `index` is less than zero or greater than or equal to the size of this
-     * `TodoList`.
-     * @throws An `Error` if incrementing the priority of the `Todo` at the specified `index` results in arithmetic
-     * overflow.
-     */
-
+    
     /**
      * Provides a new `TodoList` with the same elements as this one except for the `Todo` at the specified `index`,
      * which is replaced with one with the same name and a priority that is one greater.
