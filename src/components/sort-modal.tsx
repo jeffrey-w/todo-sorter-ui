@@ -38,10 +38,15 @@ export function SortModal(props: Props) {
     const handleSelect = (flag: boolean) => {
         undo.push(sorter.save());
         redo = [];
-        if (flag) {
-            sorter.incrementCurrent();
-        } else {
-            sorter.incrementNext();
+        try {
+            if (flag) {
+                sorter.incrementCurrent();
+            } else {
+                sorter.incrementNext();
+            }
+        } catch {
+            props.setOpen(false);
+            // TODO show error message
         }
         sorter.advance()
         if (sorter.hasNext()) {
